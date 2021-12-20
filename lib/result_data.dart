@@ -1,17 +1,43 @@
+import 'dart:convert';
 
 class ResultData {
-  late String code_result;
-  late Message code_msg;
-  late String data;
+  CodeResult? code_result;
+  Message? code_msg;
+  String? data;
 
   ResultData(
-      {required this.code_result, required this.code_msg, required this.data});
-  factory ResultData.fromJson(Map<String, dynamic> json){
-    return ResultData(code_result: json['code_result'], data: json['data'], code_msg: Message());
+      {this.code_result, this.code_msg, this.data});
+
+  factory ResultData.fromJson(String source) => ResultData.fromMap(json.decode(source));
+
+  factory ResultData.fromMap(Map<String, dynamic> map){
+    return ResultData(code_result: CodeResult.fromMap(map['code_result'])/*, code_msg: map['code_msg'] != null ? Message.fromMap(map['code_msg']) : null, data: map['data']*/);
+  }
+}
+
+class CodeResult{
+  String? key;
+  int? value;
+
+  CodeResult({this.key, this.value});
+
+  factory CodeResult.fromMap(Map<String, dynamic> map){
+    return CodeResult(
+      key: map['key'],
+      value: map['value']
+    );
   }
 }
 
 class Message {
-  late String msg;
-  late List<String> custom_fields;
+  String? msg;
+  List<String>? custom_fields;
+Message({this.msg, this.custom_fields});
+
+  factory Message.fromMap(Map<String, dynamic> map){
+    return Message(
+      msg: map['msg'],
+        custom_fields: map['custom_fields']
+    );
+  }
 }

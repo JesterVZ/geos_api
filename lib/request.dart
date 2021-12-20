@@ -15,6 +15,6 @@ Future<ResultData> fetchData(String username, String password) async{
     return ResultData.fromJson(jsonDecode(responce.body));
   } else {
     isError = true;
-    throw Exception('Fucking error');
+    throw Exception('error');
   }
 }
