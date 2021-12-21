@@ -12,7 +12,7 @@ Future<ResultData> fetchData(String username, String password) async{
   final responce = await http.get(Uri.parse(uri));
   bool isError = false;
   if(responce.statusCode == 200){
-    return ResultData.fromJson(jsonDecode(responce.body));
+    return ResultData.fromMap(jsonDecode(responce.body));
   } else {
     isError = true;
     throw Exception('error');

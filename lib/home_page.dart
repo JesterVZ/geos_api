@@ -51,7 +51,14 @@ class _HomePage extends State<HomePage>{
             future: resultData,
             builder: (context, snapshot){
               if(snapshot.hasData){
-                return Text(snapshot.data!.code_result.toString());
+                return Column(
+                  children: [
+                    Text("code_result: " + snapshot.data!.code_result.toString()),
+                    Text("Message: " + snapshot.data!.code_msg!.msg.toString()),
+                    Text("Custom fields: " + snapshot.data!.code_msg!.custom_fields!.length.toString()),
+                    Text("Data: " + snapshot.data!.data.toString()),
+                  ],
+                );
               } else {
                 return const Text("Error");
               }
