@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:geos_api/info.dart';
 import 'package:geos_api/request.dart';
 import 'package:geos_api/result_data.dart';
+
+import 'info_page.dart';
 
 class HomePage extends StatefulWidget{
   const HomePage({Key? key}) : super(key: key);
@@ -18,7 +21,7 @@ class _HomePage extends State<HomePage>{
   @override
   void initState() {
     super.initState();
-    resultData = fetchData("helper", "");
+    resultData = fetchData("helper", "G6bu9Mer3s");
   }
 
   @override
@@ -51,6 +54,7 @@ class _HomePage extends State<HomePage>{
             future: resultData,
             builder: (context, snapshot){
               if(snapshot.hasData){
+
                 return Column(
                   children: [
                     Text("code_result: " + snapshot.data!.code_result.toString()),
