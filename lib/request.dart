@@ -16,28 +16,28 @@ import 'info.dart';
 
 Future<ResultData> fetchData(String username, String password) async{
   String uri = protocol + domain + '/worker/index.php?route=common/login/api_login';
-  var dio = Dio();
+  var dio = Dio(BaseOptions(
+    connectTimeout: 30000,
+    contentType: Headers.jsonContentType,
+  ));
   Parser parser = Parser();
   var formData = FormData.fromMap({
     'username': username,
     'password': password
   });
 
-  final response = await dio.post(uri, data: formData);
-
   var cookieJar=CookieJar();
   dio.interceptors.add(CookieManager(cookieJar));
-  Future<List<Cookie>> cookies = cookieJar.loadForRequest(Uri.parse(uri));
 
+  final response = await dio.post(uri, data: formData);
 
-  List<String>? data = response.headers.map["set-cookie"];
-  Map<String, dynamic> cookieMap = parser.parseCookies(data!);
+  print(await cookieJar.loadForRequest(Uri.parse(uri)));
 
-  var testR = getInfo(cookieMap);
-  //response.headers.map["set-cookie"]
+  String uriInfo = protocol + domain + '/worker/index.php?route=common/login/api_get_info';
+  final responseInfo = await dio.post(uriInfo);
 
-  if(response.statusCode == 200){
-    return ResultData.fromMap(response.data);
+  if(responseInfo.statusCode == 200){
+    return ResultData.fromMap(responseInfo.data);
   } else {
     throw Exception('error');
   }
@@ -55,11 +55,6 @@ Future<Info> getInfo(Map<String, dynamic> map) async{
 
 
   }
-
-  HttpClientResponse clientResponse = await clientRequest.close();
-
-
-
   var dio = Dio();
   dio.options.headers = map;
   final response = await dio.post(uri);

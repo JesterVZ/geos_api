@@ -1,7 +1,7 @@
 class Info{
-  int? worker_id;
-  int? worker_group_id;
-  int? user_business_id;
+  String worker_id;
+  String worker_group_id;
+  String user_business_id;
   String? firstname;
   String? lastname;
   String? patronymic;
@@ -9,14 +9,14 @@ class Info{
   String? email;
   String? telephone;
   dynamic image;
-  DateTime? date_added;
-  DateTime? date_modified;
+  String? date_added;
+  String? date_modified;
   String? post;
 
   Info({
-      this.worker_id,
-      this.worker_group_id,
-      this.user_business_id,
+      required this.worker_id,
+      required this.worker_group_id,
+      required this.user_business_id,
       this.firstname,
       this.lastname,
       this.patronymic,
@@ -29,20 +29,21 @@ class Info{
       this.post});
 
   factory Info.fromMap(Map<String, dynamic> map){
+    Map<String, dynamic> info = map['info'];
     return Info(
-      worker_id: map['worker_id'],
-      worker_group_id: map['worker_group_id'],
-      user_business_id: map['user_business_id'],
-      firstname: map['firstname'],
-      lastname: map['lastname'],
-      patronymic: map['patronymic'],
-      initials: map['initials'],
-      email: map['email'],
-      telephone: map['telephone'],
-      image: map['image'],
-      date_added: map['date_added'],
-      date_modified: map['date_modified'],
-      post: map['post']
+      worker_id: info['worker_id'],
+      worker_group_id: info['worker_group_id'],
+      user_business_id: info['user_business_id'],
+      firstname: info['firstname'],
+      lastname: info['lastname'],
+      patronymic: info['patronymic'],
+      initials: info['initials'],
+      email: info['email'],
+      telephone: info['telephone'],
+      image: info['image'],
+      date_added: info['date_added'],
+      date_modified: info['date_modified'],
+      post: info['post']
     );
   }
 }

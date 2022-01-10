@@ -1,9 +1,11 @@
 import 'dart:convert';
 
+import 'package:geos_api/info.dart';
+
 class ResultData {
   int? code_result;
   Message? code_msg;
-  String? data;
+  Info? data;
 
   ResultData(
       {this.code_result, this.code_msg, this.data});
@@ -11,7 +13,11 @@ class ResultData {
   factory ResultData.fromJson(String source) => ResultData.fromMap(json.decode(source));
 
   factory ResultData.fromMap(Map<String, dynamic> map){
-    return ResultData(code_result: map['code_result'], code_msg: map['code_msg'] != null ? Message.fromMap(map['code_msg']) : null, /*,data: map['data']*/);
+    return ResultData(
+        code_result: map['code_result'],
+        code_msg: map['code_msg'] != null ? Message.fromMap(map['code_msg']) : null,
+        data: map['data']['info'] != null ? Info.fromMap(map['data']) : null);
+
   }
 }
 

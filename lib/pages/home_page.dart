@@ -17,6 +17,7 @@ class _HomePage extends State<HomePage>{
   final loginController = TextEditingController();
   final passwordController = TextEditingController();
   late Future<ResultData> resultData;
+  late Info info;
 
   @override
   void initState() {
@@ -54,13 +55,16 @@ class _HomePage extends State<HomePage>{
             future: resultData,
             builder: (context, snapshot){
               if(snapshot.hasData){
+                info = snapshot.data!.data!;
+
 
                 return Column(
                   children: [
                     Text("code_result: " + snapshot.data!.code_result.toString()),
                     Text("Message: " + snapshot.data!.code_msg!.msg.toString()),
                     Text("Custom fields: " + snapshot.data!.code_msg!.custom_fields!.length.toString()),
-                    Text("Data: " + snapshot.data!.data.toString()),
+                    Text("Data: " + info.toString()),
+                    ElevatedButton(onPressed: ShowFullInfo, child: const Text("show full info"))
                   ],
                 );
               } else {
@@ -71,6 +75,9 @@ class _HomePage extends State<HomePage>{
         ],
       ),
     );
+  }
+  void ShowFullInfo(){
+    Navigator.push(context, MaterialPageRoute(builder: (context) => InfoPage(info: info)));
   }
 
 }

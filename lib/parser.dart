@@ -13,7 +13,6 @@ class Parser{
           } else {
             map[parts[0]] = parts[j];
           }
-
         }
       }
 
